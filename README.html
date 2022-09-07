@@ -1,0 +1,61 @@
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <style>
+  @media only screen and (max-width: 600px) {
+    body {
+      padding: 5px;
+    }
+  }
+  @media only screen and (min-width: 600px) {
+    body {
+      padding-left: 100px;
+    }
+    body>div {padding-right: 100px}
+  }
+  </style>
+</head>
+<body>
+  <h1 id="readme">README</h1>
+  <p>A map component to be embedded in a page.</p>
+  <p>It plots choropleth maps of the British regions and constituencies and draws the data from a Google Sheet spreadsheet with a specific format.</p>
+  <p>It also plots markers as points on the map.</p>
+  <p>Author: Marc Compte (marc@compte.cat)</p>
+  <h2 id="deployment-on-production">Deployment on production</h2>
+  <p><em>You can find additional information on how to deploy the map in the README files inside the dist folder.</em></p>
+  <h2 id="development-setup">Development setup</h2>
+  <p>You can change the source code and test locally by executing the following steps:</p>
+  <ol>
+  <li>Install NPM from <a href="https://www.npmjs.com/get-npm">https://www.npmjs.com/get-npm</a></li>
+  <li>Extract the ZIP file with the full source code in a directory of your choice.</li>
+  <li>Open up a command line terminal and move into the directory where the file <code>package.json</code> resides.</li>
+  <li>Execute the following command to download and install the dependencies of the project: <code>npm install</code></li>
+  <li>Open up the local webserver by executing the following command: <code>npm run dev</code></li>
+  </ol>
+  <p>You will be able to access the development instance of the map by going to <a href="http://localhost:4444">http://localhost:4444</a> on your browser.</p>
+  <p>The main code is located inside the <code>src</code> directory and the main files are <code>index.js</code> and <code>styles.scss</code>.</p>
+  <h3 id="changing-the-colour-scheme">Changing the colour scheme</h3>
+  <p>To change the main colour scheme you need to modify both the <code>index.js</code> and the <code>styles.scss</code> files. If you ran <code>npm run dev</code> and opened up the page in your browser, the browser should refresh itself with the new changes as soon as you change either one of those files.</p>
+  <p>Open the file <code>src/styles.scss</code> with your text editor and replace the main colour in the first line:</p>
+  <pre><code><span class="hljs-variable">$main-color</span>: <span class="hljs-number">#ff9900</span>;
+  </code></pre><p>Open the file <code>src/index.js</code> with your text editor and replace the value of the constant MAIN_COLOUR:</p>
+  <pre><code><span class="hljs-keyword">const</span> MAIN_COLOUR = <span class="hljs-string">'#ff9900'</span>;
+  </code></pre><p>Both colours should be the same or very similar. The application will extrapolate all the other colours (lighter or darker) based on these variables.</p>
+  <p>On the <code>src/styles.scss</code> file you can also define a light colour that is used in the buttons of the interface. This colour can be defined on its own or based on the main colour:</p>
+  <pre><code>$lightest-<span class="hljs-keyword">color</span>: lighten($main-<span class="hljs-keyword">color</span>, <span class="hljs-number">80</span>%);
+  </code></pre><p>You can also change the colour of the outline in a selected polygon on the <code>src/index.js</code> by changing the line right under MAIN_COLOUR:</p>
+  <pre><code><span class="hljs-keyword">const</span> SELECTION_COLOUR = <span class="hljs-string">'#cacaca'</span>;
+  </code></pre><p>You can define two types of markers and you can define their colours on the <code>src/styles.scss</code> by changing the following lines at the top of the file:</p>
+  <pre><code>$marker1-background: $lightest-<span class="hljs-keyword">color</span>;
+  $marker1-border: black;
+  $marker2-background: lighten($main-<span class="hljs-keyword">color</span>, <span class="hljs-number">50</span>%);
+  $marker2-border: $main-<span class="hljs-keyword">color</span>;
+  </code></pre><p>These colours will affect both the markers themselves and the tooltips associated to them.</p>
+  <p><strong>Once you have changed the colours and you are happy with the preview on the local development environment, you need to build the production files.</strong></p>
+  <h3 id="building-production-files">Building production files</h3>
+  <p>On the command line terminal, execute the command <code>npm run build</code> to create all the final files that you need to use on your report.</p>
+  <p>These files will be generated inside the <code>dist</code> folder (and will override them if they already exist).</p>
+  <p>Follow the instructions on the <code>dist/README.html</code> to use them on production.</p>
+</body>
+</html>

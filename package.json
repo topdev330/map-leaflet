@@ -1,0 +1,37 @@
+{
+  "name": "report_map",
+  "version": "1.0.0",
+  "description": "A map to show on a report.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.config.js",
+    "dev": "webpack serve --port 4444"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/mcompte/report_map.git"
+  },
+  "author": "Marc Compte",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/mcompte/report_map#readme",
+  "devDependencies": {
+    "css-loader": "^5.2.0",
+    "file-loader": "^6.2.0",
+    "material-icons": "^0.5.4",
+    "materialize-css": "^1.0.0-rc.2",
+    "sass": "^1.32.8",
+    "sass-loader": "^11.0.1",
+    "style-loader": "^2.0.0",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.30.0",
+    "webpack-cli": "^4.6.0",
+    "webpack-dev-server": "^3.11.2",
+    "webpack-fix-style-only-entries": "^0.6.1"
+  },
+  "dependencies": {
+    "chroma-js": "^2.1.2",
+    "gapi-client": "0.0.3",
+    "leaflet": "^1.7.1"
+  }
+}
