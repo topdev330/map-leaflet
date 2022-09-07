@@ -249,7 +249,7 @@ class ReportMap {
         var layer = this.map.layers[this.map.visible].getLayers().find(layer => {
           return layer.feature.properties.Name === selected;
         });
-        this.map.leaflet.fitBounds(layer.getBounds(), {padding: [50, 50]});
+        this.map.leaflet.flyToBounds(layer.getBounds(), {padding: [50, 50], duration: 10, easeLinearity: 0.1});
         var reload_time = 0;
         if (this.panels.ContentPanel.container.classList.contains('visible')) reload_time = 301;
         this.panels.hide_info();

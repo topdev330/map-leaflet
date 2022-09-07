@@ -45,6 +45,3 @@ Thumbs.db
 *.flv
 *.mov
 *.wmv
-
-# Dist
-dist

@@ -61,10 +61,11 @@ class MapPanel extends Panel {
 
   }
   load() {
+    console.log('load------------------------');
     this.leaflet.setView([51.505, -0.09], 13, {
       "animate": true,
       "pan": {
-        "duration": 10
+        "duration": 100
       }
     });
     Object.keys(this.parent.resources).forEach(type => {
