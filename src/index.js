@@ -14,7 +14,7 @@ import './styles.scss';
 var L = require('leaflet');
 import { InfoPanel } from './components/info-panel.js';
 import { MapPanel } from './components/map-panel.js';
-import { MAIN_COLOUR, SELECTION_COLOUR, MARKERS_MIN_ZOOM } from './config.js';
+import { MAIN_COLOUR, SELECTION_COLOUR, MARKERS_MIN_ZOOM, SMOOTH_ZOM_DURATION } from './config.js';
 
 
 var API_KEY = 'AIzaSyC1NXtVttkwJXF9OcS8PBQAObx-_mTj7Ps';
@@ -249,7 +249,7 @@ class ReportMap {
         var layer = this.map.layers[this.map.visible].getLayers().find(layer => {
           return layer.feature.properties.Name === selected;
         });
-        this.map.leaflet.flyToBounds(layer.getBounds(), {padding: [50, 50], duration: 10, easeLinearity: 0.1});
+        this.map.leaflet.flyToBounds(layer.getBounds(), {padding: [50, 50], duration: SMOOTH_ZOM_DURATION});
         var reload_time = 0;
         if (this.panels.ContentPanel.container.classList.contains('visible')) reload_time = 301;
         this.panels.hide_info();

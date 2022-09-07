@@ -14,4 +14,9 @@ Define the level at which the markers should start showing (1 for a world view, 
 */
 const MARKERS_MIN_ZOOM = 10;
 
-export { MAIN_COLOUR, SELECTION_COLOUR, MARKERS_MIN_ZOOM };
+/* SMOOTH_ZOM_DURATION
+
+*/
+const SMOOTH_ZOM_DURATION = 6;
+
+export { MAIN_COLOUR, SELECTION_COLOUR, MARKERS_MIN_ZOOM, SMOOTH_ZOM_DURATION };

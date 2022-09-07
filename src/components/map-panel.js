@@ -61,13 +61,7 @@ class MapPanel extends Panel {
 
   }
   load() {
-    console.log('load------------------------');
-    this.leaflet.setView([51.505, -0.09], 13, {
-      "animate": true,
-      "pan": {
-        "duration": 100
-      }
-    });
+    this.leaflet.setView([51.505, -0.09], 13);
     Object.keys(this.parent.resources).forEach(type => {
       const resource = this.parent.resources[type];
       const metric = this.parent.panels.get_selected_metric() || this.parent.defaultMetric;
