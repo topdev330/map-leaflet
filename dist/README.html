@@ -1,0 +1,134 @@
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <style>
+  @media only screen and (max-width: 600px) {
+    body {
+      padding: 5px;
+    }
+  }
+  @media only screen and (min-width: 600px) {
+    body {
+      padding-left: 100px;
+    }
+    body>div {padding-right: 100px}
+  }
+  </style>
+</head>
+<body>
+  <h1 id="readme">README</h1>
+<p>A map component to be embedded in a page.</p>
+<p>It plots choropleth maps of the English regions and constituencies and draws the data from a Google Sheet spreadsheet with a specific format.</p>
+<p>It also plots markers (pins) on the map.</p>
+<h2 id="requirements">Requirements</h2>
+<p>To use the component we need two things:</p>
+<ol>
+<li>A Google Sheets spreadsheet with the following features.</li>
+<li>Embed the code in the HTML page.</li>
+</ol>
+<h3 id="spreadsheet">Spreadsheet</h3>
+<p><em>See the sample spreadsheet at <a href="https://docs.google.com/spreadsheets/d/1jY24N8SR6I4DSb_5Yqy_zIv9E5TA4XlpWLIuylU41lE">https://docs.google.com/spreadsheets/d/1jY24N8SR6I4DSb_5Yqy_zIv9E5TA4XlpWLIuylU41lE</a></em></p>
+<p><em>All names must be kept as mentioned with the same casing (case sensitive)</em></p>
+<p><em>All data should start at row 1, column 1, with a header on the first row and the actual data starting at row 2</em></p>
+<h4 id="regions-constituencies">Regions/constituencies</h4>
+<ul>
+<li>If we want to plot the UK regions there needs to be one sheet/tab named &quot;Regions&quot;.</li>
+<li>If we want to plot the UK constituencies there needs to be one sheet/tab named &quot;Constituencies&quot;.</li>
+<li>Both sheets/tabs should include the same columns/fields.<ul>
+<li>A field &quot;Name&quot; with the name of the region/constituency.</li>
+<li>A field &quot;Code&quot; with the official code. This is used to match the spreadsheet with the geometries.</li>
+<li>A field &quot;Sentence&quot; with a short text to be used on the sliding information panel.</li>
+<li>Any other field that we want to use as metrics.<ul>
+<li>Regions and constituencies may have different metrics.</li>
+<li>No case transformation is done on the names of the metrics (they will be shown exactly as written here).</li>
+<li>The values of the metrics should be without formatting. The map will format the numbers according to the GB standard.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="metrics">Metrics</h4>
+<p>The metrics are stored together with the Regions/Constituencies tabs. To be able to add as many metrics as you like and to define custom breakpoints for the choropleths, there must be another sheet/tab:</p>
+<ul>
+<li>The sheet must be named &quot;Metrics&quot;.</li>
+<li>Each metric may have two columns.</li>
+<li>The first column is compulsory and should have the name of the metric to be used (as written in the Regions/Constituencies tabs).</li>
+<li>The second column and third column may contain a custom set of breakpoints for the colour coding. Each of the columns should have the exact same name as the data sheets (Regions/Constituencies).<ul>
+<li>If we define a comma-separated list of breakpoints it will use those, strictly as indicated.</li>
+<li>Alternatively, we can indicate a single number N, in which case, the map will plot the choropleths in N ranges evenly spaced.</li>
+<li>If we don&#39;t indicate anything it will use 6 evenly spaced ranges.</li>
+<li>If a dataset (Regions/Constituencies) does not have a particular metric, the ranges on this sheet will be ignored for that dataset.</li>
+</ul>
+</li>
+</ul>
+<h4 id="markers">Markers</h4>
+<p>To plot the markers in the map, we need another sheet/tab named &quot;Markers&quot;, with the following columns:</p>
+<ul>
+<li>A first column indicating the &quot;Name&quot; of the marker.</li>
+<li>A second column with the &quot;Post Code&quot; of the marker (or left empty, the map does not use this column).</li>
+<li>A third column with the Latitude of the marker.</li>
+<li>A fourth column with the Longitude of the marker.</li>
+</ul>
+<p>To obtain the last two fields we can use the following process:</p>
+<ol>
+<li>Copy the entire B column (Post Code)</li>
+<li>Go to <a href="https://www.doogal.co.uk/BatchGeocoding.php">https://www.doogal.co.uk/BatchGeocoding.php</a></li>
+<li>Paste the Post Codes you just copied on the form input</li>
+<li>Remove the first line (the header &quot;Post Code&quot;)</li>
+<li>Untick all options</li>
+<li>Select &quot;Separate text output with&quot; tabs</li>
+<li>Do not include any additional columns</li>
+<li>Click on Geocode and wait until it finished</li>
+<li>On the results section, select &quot;Text&quot;</li>
+<li>Copy the entire result</li>
+<li>On this spreadsheet, click on C1 and paste.</li>
+</ol>
+<p><em>I chose to do this process this way (instead of geocoding the postal code on runtime) because it would delay the loading of the map too much.</em></p>
+<p>This geocoding seems to be working fine, although according to the author in some cases it may return a FAILED, FAILED result, which can be due to either a non existing post code or a very new post code added in the system.</p>
+<p><em>During the test, 2 out of the 500 post codes provided returned FAILED, FAILED.</em></p>
+<h3 id="embedding-the-map">Embedding the map</h3>
+<p><em>You can see an example in the index.html file included in this directory.</em></p>
+<p>To embed the map into an HTML page we need to do the following things:</p>
+<ol>
+<li>Upload to the server the files provided in the &quot;dist&quot; folder (or &quot;dist&quot; zipfile). These include:<ol>
+<li>The geojson files (regions.geojson and constituencies.geojson). <em>These files have been created by downloading them from <a href="https://geoportal.statistics.gov.uk/">https://geoportal.statistics.gov.uk/</a> and optimizing their resolution to reduce their size.</em></li>
+<li>The javascript file map-bundle.js.</li>
+<li>The leaflet stylesheet leaflet.css.</li>
+<li>The &quot;fonts&quot; folder. This folder is necessary for the icons used on the search and layer switching (regions/constituencies) buttons.</li>
+</ol>
+</li>
+<li>Add the resources to your HTML. You must include the following code inside the <HEAD> HTML tag:<pre><code><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://apis.google.com/js/api.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"module"</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"map-bundle.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"stylesheet"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"leaflet.css"</span>&gt;</span>
+</code></pre></li>
+<li><p>Indicate the anchors for the maps and their configuration within your HTML:</p>
+<pre><code>&lt;div <span class="hljs-meta">data</span>-<span class="hljs-meta">map</span>-source-id=<span class="hljs-string">"1jY24N8SR6I4DSb_5Yqy_zIv9E5TA4XlpWLIuylU41lE"</span>
+  <span class="hljs-meta">data</span>-<span class="hljs-meta">map</span>-geometries=<span class="hljs-string">"constituencies,regions"</span>
+  <span class="hljs-meta">data</span>-<span class="hljs-meta">map</span>-default-metric=<span class="hljs-string">"GVA"</span>
+  <span class="hljs-meta">data</span>-<span class="hljs-meta">map</span>-zoom-controls=<span class="hljs-string">"true"</span>
+  <span class="hljs-meta">data</span>-<span class="hljs-meta">map</span>-reset-view-control=<span class="hljs-string">"false"</span>
+  width=<span class="hljs-string">"100%"</span> style=<span class="hljs-string">"height: 400px;"</span>&gt;
+</code></pre><p>Where:</p>
+<ul>
+<li><strong>data-map-source-id</strong>
+Should contain the id of your spreadsheet as it appears in its URL:
+docs.google.com/spreadsheets/d/<strong>1jY24N8SR6I4DSb_5Yqy_zIv9E5TA4XlpWLIuylU41lE</strong>/edit</li>
+<li><strong>data-map-geometries</strong>
+Should indicate which geometries you want the map to include (regions and/or constituencies). You can choose to include both of them or only one. If you indicate the two, the first one will be the one appearing on startup.</li>
+<li><strong>data-map-defaul-metric</strong>
+Should indicate which metric de you want to display the map on startup.</li>
+<li><strong>data-map-zoom-controls</strong>
+Indicates whether the map should have zoom controls (in and out). <em>Defaults to false</em>.</li>
+<li><strong>data-map-reset-view-control</strong>
+Indicates whether the map should have a button to reset the initial view. <em>Defaults to false</em>.</li>
+<li><strong>width</strong>
+Is the width of this map instance.</li>
+<li><strong>style</strong>
+It must indicate the height of the map as a style rule and not an HTML tag attribute. You can choose to do this also via CSS rules.</li>
+</ul>
+</li>
+</ol>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+  <script src="https://apis.google.com/js/api.js"></script>
+  <script type="module" src="map-bundle.js"></script>
+  <link rel="stylesheet" href="leaflet.css">
+  <!-- <link rel="stylesheet" href="styles.min.css"> -->
+  <style>
+  @media only screen and (max-width: 600px) {
+    body {
+      padding: 5px;
+    }
+  }
+  @media only screen and (min-width: 600px) {
+    body {
+      padding-left: 100px;
+    }
+    body>div {padding-right: 100px}
+  }
+  </style>
+</head>
+<body>
+  <h4>A title</h4>
+  <p>Some text before the map component. The map component starts below.</p>
+  <div>
+    <!-- <div data-map-source-id="1spWYWBAI_yPS4JxEvjC8pEaIEkZ3vkVCHN0dkywLpIk" -->
+    <div data-map-source-id="1d-P722Iv8G4VFYk2aIfDPaXZGRcXSIn2z_ldE1pZYGQ"
+         data-map-geometries="constituencies,regions"
+         data-map-default-metric="Solar Panels Installed"
+         data-map-panel-width="300"
+         width="100%" style="height: 600px;">
+    </div>
+    <p>Some text afterwards. The map component starts above.</p>
+  </div>
+  <div>
+    <h4>A second map</h4>
+    <p>A second map requires a new spreadsheet. This one has a different height as well.</p>
+    <div>
+      <!-- <div data-map-source-id="1j0mIaeQo9tgBrJmuHNTMDIGlRDosgQcz5DwZl7jSsgw"
+           data-map-geometries="regions,constituencies"
+           data-map-default-metric="Jobs"
+           width="100%" style="height: 600px;">
+      </div> -->
+      <p>Some text afterwards. The map component starts above.</p>
+  </div>
+  <!-- <textarea id="test"></textarea> -->
+</body>
+</html>
