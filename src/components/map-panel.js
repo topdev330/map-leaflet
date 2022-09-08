@@ -185,12 +185,17 @@ class MapPanel extends Panel {
       onEachFeature: (feature, layer) => {
         layer.on('click', event => {
           this.parent.panels.load_info(feature, event);
-          if(JSON.stringify(this.previousBound) != JSON.stringify(layer.getBounds())) {
+          if(JSON.stringify(this.previousBound) == JSON.stringify(this.initialBounds)) {
+            this.parent.map.leaflet.flyToBounds(layer.getBounds(), {padding: [50, 50], duration: SMOOTH_ZOM_DURATION});
+            this.previousBound = layer.getBounds();
+          } else if(JSON.stringify(this.previousBound) != JSON.stringify(layer.getBounds())) {
             this.parent.map.leaflet.flyToBounds(layer.getBounds(), {padding: [50, 50], duration: SMOOTH_ZOM_DURATION});
             this.previousBound = layer.getBounds();
           } else {
             this.parent.map.leaflet.flyToBounds(this.initialBounds, {padding: [50, 50], duration: SMOOTH_ZOM_DURATION});
+            this.previousBound = this.initialBounds;
           }
+          
         });
       }
     });
