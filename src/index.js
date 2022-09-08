@@ -323,7 +323,7 @@ class ReportMap {
       onclick: event => {
         var layer = this.map.show_layer(this.map.visible)
         // this.map.leaflet.flyToBounds(layer, {padding: [50, 50], duration: SMOOTH_ZOM_DURATION});
-        this.map.leaflet.fitBounds(layer.getBounds(), {padding: [50, 50]});
+        this.map.leaflet.flyToBounds(layer.getBounds(), {padding: [50, 50], duration: SMOOTH_ZOM_DURATION});
       }
     });
     this.update_layers_button(available);
