@@ -315,6 +315,17 @@ class ReportMap {
         this.update_search();
       }
     });
+    this.zoomOutButton({
+      layer: this.map.visible,
+      tooltip: 'Zoom out',
+      icon: 'zoom_out',
+      size: 'large',
+      onclick: event => {
+        var layer = this.map.show_layer(this.map.visible)
+        // this.map.leaflet.flyToBounds(layer, {padding: [50, 50], duration: SMOOTH_ZOM_DURATION});
+        this.map.leaflet.fitBounds(layer.getBounds(), {padding: [50, 50]});
+      }
+    });
     this.update_layers_button(available);
     this.update_metrics_selector();
   }
@@ -332,6 +343,20 @@ class ReportMap {
           <i class="large material-icons">${params.icon}</i>
         </a>
         <div class="switch_help_text" style="float:right; text-align:right;padding-right: 4px; font-weight: bold;">${params.tooltip}</div>
+        `;
+    btn.innerHTML = html;
+    this.map.container.appendChild(btn);
+    if (params.onclick) {
+      btn.addEventListener('pointerup', params.onclick);
+    }
+  }
+  zoomOutButton(params) {
+    var btn = document.createElement('div');
+    btn.classList.add('zoom-out-btn');
+    var html = `
+        <a class="btn-floating btn-large tooltipped" data-tooltip="${params.tooltip}" data-position="${params.tooltip_direction}">
+          <i class="large material-icons">${params.icon}</i>
+        </a>
         `;
     btn.innerHTML = html;
     this.map.container.appendChild(btn);

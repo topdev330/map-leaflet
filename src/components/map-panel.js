@@ -1,5 +1,5 @@
 import chroma from 'chroma-js';
-import { MAIN_COLOUR, MARKERS_MIN_ZOOM } from '../config.js';
+import { MAIN_COLOUR, MARKERS_MIN_ZOOM, SMOOTH_ZOM_DURATION } from '../config.js';
 import { Panel } from './panel.js';
 
 class MapPanel extends Panel {
@@ -23,6 +23,8 @@ class MapPanel extends Panel {
     this.colors = chroma.scale(['#ffffff', MAIN_COLOUR]).mode('lch').colors(7);
     this.colors.shift();
     this.init();
+    //
+    this.previousBound = {};
   }
   init() {
     this.leaflet = L.map(this.id, {zoomSnap: 0, minZoom: 5});
@@ -183,6 +185,12 @@ class MapPanel extends Panel {
       onEachFeature: (feature, layer) => {
         layer.on('click', event => {
           this.parent.panels.load_info(feature, event);
+          if(JSON.stringify(this.previousBound) != JSON.stringify(layer.getBounds())) {
+            this.parent.map.leaflet.flyToBounds(layer.getBounds(), {padding: [50, 50], duration: SMOOTH_ZOM_DURATION});
+            this.previousBound = layer.getBounds();
+          } else {
+            this.parent.map.leaflet.flyToBounds(this.initialBounds, {padding: [50, 50], duration: SMOOTH_ZOM_DURATION});
+          }
         });
       }
     });

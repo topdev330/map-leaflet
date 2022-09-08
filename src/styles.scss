@@ -115,6 +115,15 @@ body .btn:hover, body .btn-small:hover {
   height: 58px;
   width: 58px;
 }
+.report-map-container .zoom-out-btn {
+  position: absolute;
+  right: 8px;
+  top: 4px;
+  padding: 0px;
+  height: 58px;
+  width: 58px;
+  z-index: 958;
+}
 .report-map-container .fixed-action-btn a {
   background: $main-color;
   transition: .3s all;
@@ -131,6 +140,33 @@ body .btn:hover, body .btn-small:hover {
   width: 52px;
 }
 .report-map-container .fixed-action-btn a.btn-floating:hover i {
+  color: darken($main-color, 20%);
+  transition: .3s all;
+}
+.report-map-container .zoom-out-btn {
+  position: absolute;
+  right: 70px;
+  top: 4px;
+  padding: 0px;
+  height: 58px;
+  width: 58px;
+}
+.report-map-container .zoom-out-btn a {
+  background: $main-color;
+  transition: .3s all;
+  border: 2px solid $lightest-color;
+}
+.report-map-container .zoom-out-btn a:hover {
+  background: $lightest-color;
+  transition: .3s all;
+}
+.report-map-container .zoom-out-btn a.btn-floating i {
+  transition: .3s all;
+  color: $lightest-color;
+  line-height: 52px;
+  width: 52px;
+}
+.report-map-container .zoom-out-btn a.btn-floating:hover i {
   color: darken($main-color, 20%);
   transition: .3s all;
 }
@@ -421,6 +457,11 @@ body .select-dropdown.dropdown-content li.selected {
     font-weight: bold;
   }
   .fixed-action-btn>div {
+    text-align: right;
+    float: right;
+  }
+
+  .zoom-out-btn>div {
     text-align: right;
     float: right;
   }
