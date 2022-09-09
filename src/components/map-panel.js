@@ -27,7 +27,13 @@ class MapPanel extends Panel {
     this.previousBound = {};
   }
   init() {
-    this.leaflet = L.map(this.id, {zoomSnap: 0, minZoom: 5});
+    this.leaflet = L.map(this.id, {zoomSnap: 0, minZoom: 5, renderer: L.svg({ padding: 100 })});
+    // this.leaflet.getRenderer(this.leaflet).options.padding = 100;
+
+    setInterval(function() {
+      // this.leaflet.fire('viewreset');
+      // this.leaflet.redraw()
+    }, 1200)
     if (!this.zoomControls) {
       document.querySelector('.leaflet-control-zoom').style.display = 'none';
     }
@@ -37,6 +43,7 @@ class MapPanel extends Panel {
     this.legend = new Panel('reportmap_legend', this.parent);
     this.load();
   }
+
   add_reset_view_control() {
     document.querySelectorAll('.leaflet-control-zoom a').forEach(control => {
       control.dataset.tooltip = control.title;
